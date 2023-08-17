@@ -1,4 +1,4 @@
-import mongoose,{Schema} from "mongoose";
+import mongoose,{Mongoose, Schema} from "mongoose";
 
 const productSchema=new Schema({
  name:{
@@ -16,6 +16,10 @@ const productSchema=new Schema({
  image:{
     type:String,
     required:true
+ },
+ userId:{
+   type:mongoose.Schema.Types.ObjectId,
+   ref:"User"
  }
 })
 
