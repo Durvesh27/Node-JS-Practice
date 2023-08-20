@@ -27,6 +27,9 @@ return res.json({status:"error",message:"Fill all Fields"})
 const user=await UserModal.findOne({email})
 if(!user) return res.json({status:"error",message:"User not Found"})
 
+if(user.isBlocked)
+return res.json({success:false,message:"You are blocked report to Admin"})
+
 const isPasswordRight=await bcrypt.compare(password,user.password)
 if(isPasswordRight){
     const userObject={

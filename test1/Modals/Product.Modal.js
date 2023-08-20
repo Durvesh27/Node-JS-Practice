@@ -20,7 +20,23 @@ const productSchema=new Schema({
  userId:{
    type:mongoose.Schema.Types.ObjectId,
    ref:"User"
- }
+ },
+ isBlocked:{
+   type:Boolean,
+   default:false
+},
+ isVerified:{
+   type:Boolean,
+   default:false
+},
+ratings:{
+   type:[Number],
+   enum:[1,2,3,4,5]
+},
+comments:{
+type:[Object]
+}
+
 })
 
 export default mongoose.model("product",productSchema)
