@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv'
 import mongoose from 'mongoose';
+import cors from 'cors'
 import { Login, Register, getCurrentUser } from './Controllers/User.controller.js';
 import { addComments, addProduct, addRating, allProducts, deleteYourProduct, getYourProduct, updateYourProduct } from './Controllers/Product.Controller.js';
 import { Admin, checkSeller, isValidUser } from './Middlewares/All.Middlewares.js';
@@ -10,7 +11,7 @@ import { blockProduct, blockUser, getAllBuyers, getAllProducts, getAllSellers, u
 const app=express()
 app.use(express.json())
 dotenv.config()
-
+app.use(cors())
 
 app.get("/",(req,res)=>{
     console.log("Code running")

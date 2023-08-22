@@ -33,7 +33,10 @@ export const addProduct = async (req, res) => {
 
 export const allProducts = async (req, res) => {
   try {
-    const products = await ProductModal.find({isBlocked:false,isVerified:true});
+    const products = await ProductModal.find({
+      isBlocked: false,
+      isVerified: true,
+    });
     if (products.length) {
       return res.status(200).json({ status: "success", products: products });
     }
@@ -126,30 +129,36 @@ export const deleteYourProduct = async (req, res) => {
   }
 };
 
-export const addRating=async(req,res)=>{
-try{
-const{productId,rating}=req.body;
-const updatedProductRating=await ProductModal.findByIdAndUpdate(productId,{$push:{ratings:rating}},{new:true})
-if(updatedProductRating)
-return res.status(200).json({"success":true,product:updatedProductRating})
-throw new Error("Mongo Error")
-}
-
-catch(error){
-  return res.status(500).json({ status: "error", error: error.message });  
-}
-}
-
-export const addComments=async(req,res)=>{
-  try{
-  const{productId,userId,comment}=req.body;
-  const user =await UserModal.findById(userId)
-  const updatedComments=await ProductModal.findByIdAndUpdate(productId,{$push:{comments:{name:user.name,comments:comment}}},{new:true})
-
-  if(updatedComments)
-  return res.status(200).json({status:true,product:updatedComments})
+export const addRating = async (req, res) => {
+  try {
+    const { productId, rating } = req.body;
+    const updatedProductRating = await ProductModal.findByIdAndUpdate(
+      productId,
+      { $push: { ratings: rating } },
+      { new: true }
+    );
+    if (updatedProductRating)
+      return res
+        .status(200)
+        .json({ success: true, product: updatedProductRating });
+    throw new Error("Mongo Error");
+  } catch (error) {
+    return res.status(500).json({ status: "error", error: error.message });
   }
-  catch(error){
-    return res.status(500).json({ status: "error", error: error.message });  
+};
+
+export const addComments = async (req, res) => {
+  try {
+    const { productId, name, comment } = req.body;
+    const updatedComments = await ProductModal.findByIdAndUpdate(
+      productId,
+      { $push: { comments: { name: name, comments: comment } } },
+      { new: true }
+    );
+
+    if (updatedComments)
+      return res.status(200).json({ status: true, product: updatedComments });
+  } catch (error) {
+    return res.status(500).json({ status: "error", error: error.message });
   }
-}
+};

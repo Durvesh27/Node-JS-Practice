@@ -36,7 +36,6 @@ ratings:{
 comments:{
 type:[Object]
 }
-
 })
 
 export default mongoose.model("product",productSchema)
