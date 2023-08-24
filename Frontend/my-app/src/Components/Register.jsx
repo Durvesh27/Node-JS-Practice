@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import "./Form.css";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../MyContext";
 const Register = () => {
+  const{state}=useContext(AuthContext)
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -48,6 +50,11 @@ const Register = () => {
       toast.error("Please fill all the Fields");
     }
   };
+  useEffect(()=>{
+    if(state?.user?.name){
+    router("/")
+    }
+    },[state])
   return (
     <div>
       <form onSubmit={handleSubmit} className="form">

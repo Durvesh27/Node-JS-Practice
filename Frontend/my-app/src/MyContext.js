@@ -1,37 +1,56 @@
+import axios from "axios";
 import { createContext, useEffect, useReducer } from "react";
 
-export const AuthContext=createContext();
+export const AuthContext = createContext();
 
-const initialValue={user:null}
+const initialValue = { user: null };
 
-const reducer=(state,action)=>{
-switch(action.type){
-case "login":
-return {user:action.payload}
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "login":
+      return {...state, user: action.payload };
 
-case "logout":
-return {user:null}
+    case "logout":
+      return {...state, user: null };
 
-default:
-return state
-}
-}
+    default:
+      return state;
+  }
+};
 
-const AuthProvider=({children})=>{
-const[state,dispatch]=useReducer(reducer,initialValue)
+const AuthProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialValue);
 
-function Login(userDetails){
-dispatch({
-type:"login",
-payload:userDetails
-})
-}
-
-return(
-<AuthContext.Provider value={{state,Login}}>
-{children}
-</AuthContext.Provider>
-)
-
-}
+  function Login(userDetails) {
+    dispatch({
+      type: "login",
+      payload: userDetails,
+    });
+  }
+  useEffect(() => {
+    const getCurrentUserData = async () => {
+      const token = JSON.parse(localStorage.getItem("Token"));
+      const response = await axios.post(
+        "http://localhost:8000/getCurrentUser",
+        { token }
+      );
+      if (response.data.success) {
+        dispatch({
+          type: "login",
+          payload: response.data.user
+        });
+      } else {
+        dispatch({
+          type: "logout",
+        });
+      }
+    };
+    getCurrentUserData();
+  }, []);
+  return (
+    <AuthContext.Provider value={{ state, Login }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 export default AuthProvider;

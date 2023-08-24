@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import './Form.css'
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { AuthContext } from "../MyContext";
 const Login = () => {
 const router=useNavigate();
 const [userData,setUserData]=useState({email:"",password:""})
-const{Login}=useContext(AuthContext)
+const{Login,state}=useContext(AuthContext)
 const handleChange=(e)=>{
 setUserData({...userData,[e.target.name]:e.target.value})
 }
@@ -21,7 +21,7 @@ if (userData.email && userData.password) {
         setUserData({ email: "", password: "" })
         router('/')
         toast.success(response.data.message)
-        localStorage.setItem("Token",response.data.token)
+        localStorage.setItem("Token",JSON.stringify(response.data.token))
         Login(response.data.user)
     } else {
         toast.error(response.data.message)
@@ -30,6 +30,12 @@ if (userData.email && userData.password) {
     toast.error("All fields are mandtory.")
 }
 }
+useEffect(()=>{
+if(state?.user?.name){
+router("/")
+}
+},[state])
+
   return (
     <div>
    

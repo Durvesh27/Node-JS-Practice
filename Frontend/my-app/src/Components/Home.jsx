@@ -9,7 +9,7 @@ console.log(state)
     <h1 style={{textAlign:"center"}}>
       HOME 
     </h1>
-    <h3 style={{textAlign:"center",color:"grey"}}>{state.user.name}</h3>
+    <h3 style={{textAlign:"center",color:"grey"}}>{state?.user?.name}</h3>
     </>
   )
 }
