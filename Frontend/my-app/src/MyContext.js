@@ -27,28 +27,37 @@ const AuthProvider = ({ children }) => {
       payload: userDetails,
     });
   }
+
+  function Logout(){
+  localStorage.removeItem("Token")
+    dispatch({
+      type: "logout"
+    });
+  }
   useEffect(() => {
     const getCurrentUserData = async () => {
       const token = JSON.parse(localStorage.getItem("Token"));
-      const response = await axios.post(
-        "http://localhost:8000/getCurrentUser",
-        { token }
-      );
-      if (response.data.success) {
-        dispatch({
-          type: "login",
-          payload: response.data.user
-        });
-      } else {
-        dispatch({
-          type: "logout",
-        });
+      if(token){
+        const response = await axios.post(
+          "http://localhost:8000/getCurrentUser",
+          { token }
+        );
+        if (response.data.success) {
+          dispatch({
+            type: "login",
+            payload: response.data.user
+          });
+        } else {
+          dispatch({
+            type: "logout",
+          });
+        }  
       }
     };
     getCurrentUserData();
   }, []);
   return (
-    <AuthContext.Provider value={{ state, Login }}>
+    <AuthContext.Provider value={{ state, Login ,Logout}}>
       {children}
     </AuthContext.Provider>
   );

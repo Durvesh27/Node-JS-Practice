@@ -1,28 +1,25 @@
-import React, { useContext } from 'react'
-import { AuthContext } from '../MyContext'
 import axios from 'axios'
+import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
-const Home = () => {
-const {state}=useContext(AuthContext)
+
+const YourProducts = () => {
 const[myProducts,setMyProducts]=useState()
 useEffect(()=>{
 async function getProducts() {
-const response =await axios.get("http://localhost:8000/all-products")  
-if(response.data.success){
-setMyProducts(response.data.products)
+const token = JSON.parse(localStorage.getItem("Token"));
+if(token){
+    const response =await axios.post("http://localhost:8000/get-your-product",{token})  
+    if(response.data.success){
+    setMyProducts(response.data.products)
+    }
 }
 }
 getProducts()
 },[])
   return (
-    <>
-    <h1 style={{textAlign:"center"}}>
-      HOME 
-    </h1>
-    <h3 style={{textAlign:"center",color:"grey"}}>{state?.user?.name}</h3>
     <div>
-      <h2 style={{marginLeft:"20px",marginTop:"20px"}}>All Products</h2>
+      <h2 style={{marginLeft:"20px",marginTop:"20px"}}>My Products</h2>
       {
         myProducts?.length ?
       <div style={{display:"flex"}}>
@@ -39,8 +36,7 @@ getProducts()
       <p style={{marginLeft:"20px",marginTop:"20px"}}>No Products</p>
       }
     </div>
-    </>
   )
 }
 
-export default Home
+export default YourProducts

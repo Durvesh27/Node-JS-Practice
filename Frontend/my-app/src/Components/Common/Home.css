@@ -1,0 +1,30 @@
+.flex{
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.navbar{
+/* border: 1px solid red; */
+padding: 0 20px;
+font-size: 17px;
+height: 60px;
+background-color:whitesmoke;
+color: green;
+font-weight: 600;
+}
+.primary{
+width: 40%;
+/* border: 2px solid blue; */
+}
+.logo{
+width: 20%;
+font-size: 20px;
+font-weight: 600;
+}
+.navi{
+width: 40%;
+}
+.secondary{
+width: 20%;
+/* border: 2px solid orange; */
+}

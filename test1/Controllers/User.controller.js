@@ -36,6 +36,7 @@ if(isPasswordRight){
     const userObject={
         name:user.name,
         email:user.email,
+        role:user.role,
         _id:user._id
     }
     const token=jwt.sign({userId:user._id},process.env.JWT_SECRET)
@@ -64,6 +65,7 @@ export const getCurrentUser=async (req,res)=>{
     const userObject={
       name:user?.name,
       email:user?.email,
+      role:user?.role,
       _id:user?._id
     }
     return res.status(200).json({success:true,user:userObject})
