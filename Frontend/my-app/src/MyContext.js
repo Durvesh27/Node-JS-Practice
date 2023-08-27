@@ -38,20 +38,21 @@ const AuthProvider = ({ children }) => {
     const getCurrentUserData = async () => {
       const token = JSON.parse(localStorage.getItem("Token"));
       if(token){
-        const response = await axios.post(
-          "http://localhost:8000/getCurrentUser",
-          { token }
-        );
-        if (response.data.success) {
-          dispatch({
-            type: "login",
-            payload: response.data.user
-          });
-        } else {
-          dispatch({
-            type: "logout",
-          });
-        }  
+        try{
+          const response = await axios.post(
+            "http://localhost:8000/getCurrentUser",
+            { token }
+          );
+          if (response.data.success) {
+            dispatch({
+              type: "login",
+              payload: response.data.user
+            });
+          } 
+        }
+        catch(error){
+          console.log(error)
+        }
       }
     };
     getCurrentUserData();

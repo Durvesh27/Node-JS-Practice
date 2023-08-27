@@ -6,6 +6,19 @@ name:{
     type:String,
     required:true
 },
+number:{
+type:Number,
+required:true
+},
+numberVerified:{
+type:Boolean,
+default:false
+},
+otpForNumberVerification:{
+type:Number,
+default:null
+// required:true
+},
 email:{
     type:String,
     required:true

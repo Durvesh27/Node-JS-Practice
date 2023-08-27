@@ -8,11 +8,11 @@ const AuthProtected = ({children}) => {
 const{state}=useContext(AuthContext)
 const router=useNavigate();
 useEffect(()=>{
-if(state?.user?.name){
-router('/')
+if(!state?.user?.name){
+router('/login')
 }
 },[state])
-  return state?.user?.name ? children:null;
+return state?.user?.name ? children:null;
 }
 
 export default AuthProtected

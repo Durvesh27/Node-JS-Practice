@@ -6,25 +6,29 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../MyContext";
 const Register = () => {
-  const{state}=useContext(AuthContext)
   const [userData, setUserData] = useState({
     name: "",
     email: "",
     role: "Buyer",
+    number:"",
     password: "",
     confirmPassword: "",
   });
+  const{state}=useContext(AuthContext)
   const router = useNavigate();
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
-
+  const handleChangeForSelect = (event) => {
+    setUserData({ ...userData, "role": event.target.value })
+}
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
       userData.name &&
       userData.email &&
       userData.role&&
+      userData.number&&
       userData.password &&
       userData.confirmPassword
     ) {
@@ -35,8 +39,9 @@ const Register = () => {
             name: "",
             email: "",
             role: "Buyer",
+            number:"",
             password: "",
-            confirmPassword: "",
+            confirmPassword: ""
           });
           toast.success(response.data.message);
           router("/login");
@@ -50,15 +55,16 @@ const Register = () => {
       toast.error("Please fill all the Fields");
     }
   };
-  useEffect(()=>{
-    if(state?.user?.name){
-    router("/")
-    }
-    },[state])
+  // useEffect(()=>{
+  //   if(state?.user?.name){
+  //   router("/")
+  //   }
+  //   },[state])
   return (
     <div>
-      <form onSubmit={handleSubmit} className="form">
         <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Register</h2>
+      <form onSubmit={handleSubmit} className="form">
+        <>
         <input
           type="text"
           name="name"
@@ -77,8 +83,7 @@ const Register = () => {
           className="input"
         />
         <select
-          name="role"
-          onChange={handleChange}
+          onChange={handleChangeForSelect}
           className="input"
           style={{ margin: 0 }}
           value={userData.role}
@@ -87,7 +92,14 @@ const Register = () => {
           <option value="Seller">Seller</option>
         </select>
         <br />
-        <br />
+        <input
+          type="number"
+          name="number"
+          placeholder="Enter Mobile Number"
+          onChange={handleChange}
+          value={userData.number}
+          className="input"
+        />
         <input
           type="password"
           name="password"
@@ -107,7 +119,7 @@ const Register = () => {
         />
         <br />
         <input type="submit" value="Register" />
-        <br />
+        </>
         <p>
           Already have an account?{" "}
           <b style={{ color: "green" }} onClick={() => router("/login")}>

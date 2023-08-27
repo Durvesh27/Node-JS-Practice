@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv'
 import mongoose from 'mongoose';
 import cors from 'cors'
-import { Login, Register, getCurrentUser } from './Controllers/User.controller.js';
+import { Login, Register, getCurrentUser, getNumber, sentOtp, verifyOtp } from './Controllers/User.controller.js';
 import { addComments, addProduct, addRating, allProducts, deleteYourProduct, getYourProduct, updateYourProduct } from './Controllers/Product.Controller.js';
 import { Admin, checkSeller, isValidUser } from './Middlewares/All.Middlewares.js';
 import { addCart, addWishlist, deleteCartProduct, getCartProducts, getWishlistProducts } from './Controllers/Buyer.Controller.js';
@@ -31,6 +31,10 @@ app.get("/get-cart-products",getCartProducts)
 app.patch("/add-rating",isValidUser,addRating)
 app.patch("/add-comments",isValidUser,addComments)
 
+
+app.post("/get-number",getNumber)
+app.post("/send-otp",sentOtp)
+app.post("verify-otp",verifyOtp)
 
 app.post("/add-wishlist",addWishlist)
 app.get("/get-wishlist-products",getWishlistProducts)
