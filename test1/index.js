@@ -34,7 +34,7 @@ app.patch("/add-comments",isValidUser,addComments)
 
 app.post("/get-number",getNumber)
 app.post("/send-otp",sentOtp)
-app.post("verify-otp",verifyOtp)
+app.post("/verify-otp",verifyOtp)
 
 app.post("/add-wishlist",addWishlist)
 app.get("/get-wishlist-products",getWishlistProducts)

@@ -17,10 +17,7 @@ getProducts()
 },[])
   return (
     <>
-    <h1 style={{textAlign:"center"}}>
-      HOME 
-    </h1>
-    <h3 style={{textAlign:"center",color:"grey"}}>{state?.user?.name}</h3>
+    <h3 style={{textAlign:"center",color:"grey",marginTop:"15px"}}>{state?.user?.name}</h3>
     <div>
       <h2 style={{marginLeft:"20px",marginTop:"20px"}}>All Products</h2>
       {

@@ -9,15 +9,15 @@ import { toast } from 'react-hot-toast'
 const Profile = () => {
 const {state}=useContext(AuthContext)
 const[number,setNumber]=useState()
-const [numberVerified,setNumberVerified]=useState(true)
-const [otp,setOtp]=useState()
+const [numberVerified,setNumberVerified]=useState(false)
+const [otp,setOtp]=useState(null)
 const[otpSent,setOtpSent]=useState(false)
 
 
 
 
 const sendOtp=async ()=>{
-const response=await axios.post("http://localhost:8000/send-otp",{userId:state?.user?._id})
+const response=await axios.post("http://localhost:8000/send-otp",{userId:state?.user?._id,otp})
 
 if(response.data.success){
     setOtpSent(true)
@@ -26,10 +26,14 @@ if(response.data.success){
 }
 
 const verifyOtp=async()=>{
-    const response=await axios.post("http://localhost:8000/verify-otp",{userId:state?.user?._id,otp})
+  console.log(state?.user?._id,"idd")
+  console.log(otp,"otp")
+    const response=await axios.post("http://localhost:8000/verify-otp",{userId:state?.user?._id,otp:otp
+  })
     if(response.data.success){
+        console.log("Working")
         setOtpSent(false)
-        setNumberVerified(response.data.numberVerified)
+        setNumberVerified(true)
         toast.success("OTP is verified")
         }
 }
@@ -56,17 +60,17 @@ if(state?.user?._id){
   return (
 
 <div style={{margin:"auto",width:"50%",textAlign:"center",paddingTop:"50px"}}>
-<h2>Profile</h2>
-<h3>Phone Number : {number}</h3>
+<h2 style={{marginBottom:"10px"}}>Profile</h2>
+<h3 style={{fontWeight:"600"}}>Phone Number : <b>{number}</b></h3>
 {
-numberVerified? <h4>Your Phone Number verified</h4>:
-<button onClick={sendOtp}>Verify your phone Number</button>
+numberVerified? <h4 style={{marginTop:"10px",color:"green"}}>Your Phone Number is Verified</h4>:
+<button onClick={sendOtp} style={{padding:"2px 8px",margin:"10px 0"}}>Verify your phone Number</button>
 }
 {
 otpSent && 
 <div>
-<input type="number" onClick={(e)=>setOtp(e.target.value)} />
-<button onClick={verifyOtp}>Submit Otp</button>
+<input type="text" onChange={(event)=>setOtp(event.target.value)} style={{padding:"5px 10px",marginRight:"5px"}} />
+<button onClick={verifyOtp} style={{padding:"5px 10px"}}>Submit Otp</button>
 </div>
 }
 </div>

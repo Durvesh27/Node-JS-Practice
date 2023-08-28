@@ -62,8 +62,9 @@ const Register = () => {
   //   },[state])
   return (
     <div>
-        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Register</h2>
+       
       <form onSubmit={handleSubmit} className="form">
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Register</h2>
         <>
         <input
           type="text"
@@ -85,7 +86,7 @@ const Register = () => {
         <select
           onChange={handleChangeForSelect}
           className="input"
-          style={{ margin: 0 }}
+          style={{ marginBottom: "25px"}}
           value={userData.role}
         >
           <option value="Buyer">Buyer</option>

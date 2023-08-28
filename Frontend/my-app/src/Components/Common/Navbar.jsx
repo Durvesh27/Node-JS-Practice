@@ -29,11 +29,11 @@ const router=useNavigate();
         {state?.user?.name?
          <>
          {state?.user?.role!="Seller" && <p>Cart</p>}
-         <p>Profile</p>
+         <p onClick={()=>router("/profile")}>Profile</p>
          <p onClick={()=>Logout()}>Logout</p>
          </>
         :
-        <p onClick={()=>router("/login")}>Login</p>}
+        <p onClick={()=>router("/login")}>Login/Register</p>}
       </div>
     </div>
   );

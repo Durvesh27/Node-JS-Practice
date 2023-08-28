@@ -2,6 +2,7 @@ import UserModal from "../Modals/User.Modal.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendTwilioMessage } from "../Helpers/Sms.js";
+import random from "random";
 
 export const Register = async (req, res) => {
   try {
@@ -126,7 +127,7 @@ export const sentOtp = async (req, res) => {
     if (!userId)
       return res.json({ success: false, message: "User Id is mandatory" });
     const userNumber = await UserModal.findById(userId);
-    const otp = 83690;
+    const otp = random.int(100000,999999);
     const message = `Hi your Mobile number verification code is ${otp}`;
     if (userNumber) {
       const responseFromTwilio = sendTwilioMessage(userNumber?.number, message);
@@ -147,7 +148,7 @@ export const sentOtp = async (req, res) => {
 
 export const verifyOtp = async (req, res) => {
   try {
-    const { userId, otp } = req.body;
+    const { userId,otp } = req.body;
     if (!userId || !otp)
       return res.json({ success: false, message: "All Fields mandatory" });
     const verifyNumber = await UserModal.findById(userId);
@@ -161,6 +162,7 @@ export const verifyOtp = async (req, res) => {
         });
       }
     }
+    return res.json({ success: false, message: "User not found" });
   } catch (error) {
     return res.json({ success: false, message: error });
   }
