@@ -1,5 +1,6 @@
-import axios from "axios";
+
 import { createContext, useEffect, useReducer } from "react";
+import api from "./Components/Api Config";
 
 export const AuthContext = createContext();
 
@@ -39,7 +40,7 @@ const AuthProvider = ({ children }) => {
       const token = JSON.parse(localStorage.getItem("Token"));
       if(token){
         try{
-          const response = await axios.post(
+          const response = await api.post(
             "http://localhost:8000/getCurrentUser",
             { token }
           );

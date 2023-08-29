@@ -3,12 +3,13 @@ import { AuthContext } from '../MyContext'
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import api from './Api Config'
 const Home = () => {
 const {state}=useContext(AuthContext)
 const[myProducts,setMyProducts]=useState()
 useEffect(()=>{
 async function getProducts() {
-const response =await axios.get("http://localhost:8000/all-products")  
+const response =await api.get("http://localhost:8000/all-products")  
 if(response.data.success){
 setMyProducts(response.data.products)
 }

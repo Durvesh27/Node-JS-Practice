@@ -3,12 +3,12 @@ import { useState } from "react";
 import './Form.css'
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import axios from "axios";
 import { AuthContext } from "../MyContext";
+import api from "./Api Config";
 const Login = () => {
 const router=useNavigate();
 const [userData,setUserData]=useState({email:"",password:""})
-const{Login,state}=useContext(AuthContext)
+const{Login,state,Logout}=useContext(AuthContext)
 const handleChange=(e)=>{
 setUserData({...userData,[e.target.name]:e.target.value})
 }
@@ -16,20 +16,24 @@ setUserData({...userData,[e.target.name]:e.target.value})
 const handleSubmit=async(e)=>{
 e.preventDefault();
 if (userData.email && userData.password) {
-    const response = await axios.post("http://localhost:8000/login", { userData });
+  try{
+    const response = await api.post("http://localhost:8000/login", { userData });
     if (response.data.success) {
         setUserData({ email: "", password: "" })
         router('/')
         toast.success(response.data.message)
         localStorage.setItem("Token",JSON.stringify(response.data.token))
         Login(response.data.user)
-    } else {
-        toast.error(response.data.message)
+  }
+    } catch(error){
+        toast.error(error.response.data.message)
     }
 } else {
+    Logout();
     toast.error("All fields are mandtory.")
 }
 }
+
 useEffect(()=>{
 if(state?.user?.name){
 router("/")

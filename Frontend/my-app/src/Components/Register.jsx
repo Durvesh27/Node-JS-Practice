@@ -2,9 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import "./Form.css";
 import { toast } from "react-hot-toast";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../MyContext";
+import api from "./Api Config";
 const Register = () => {
   const [userData, setUserData] = useState({
     name: "",
@@ -33,7 +33,7 @@ const Register = () => {
       userData.confirmPassword
     ) {
       if (userData.password === userData.confirmPassword) {
-        const response = await axios.post("http://localhost:8000/register", { userData });
+        const response = await api.post("http://localhost:8000/register", { userData });
         if (response.data.success) {
           setUserData({
             name: "",
@@ -55,11 +55,11 @@ const Register = () => {
       toast.error("Please fill all the Fields");
     }
   };
-  // useEffect(()=>{
-  //   if(state?.user?.name){
-  //   router("/")
-  //   }
-  //   },[state])
+  useEffect(()=>{
+    if(state?.user?.name){
+    router("/")
+    }
+    },[state])
   return (
     <div>
        
