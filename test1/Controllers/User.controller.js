@@ -50,8 +50,9 @@ export const Login = async (req, res) => {
         role: user.role,
         _id: user._id,
       };
-      const expiryTime=user?.role =="Seller"? "4h":"1h";
+      const expiryTime=user?.role =="Buyer"? 10:10;
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET,{expiresIn:expiryTime});
+      // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
       return res.json({
         success: true,
         message: "Login Successfull",
@@ -73,6 +74,17 @@ export const getCurrentUser = async (req, res) => {
         .status(404)
         .json({ status: "error", message: "Token is required" });
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+    // (err,res)=>{
+    //   if(err){
+    //   return "Token Expired"
+    //   }
+    //   return res;
+    //   }
+    // if(decodedData =="Token Expired"){
+    //   return res
+    //   .status(404)
+    //   .json({ success: false, message: "Token Expired" }); 
+    // }
     if (!decodedData) {
       return res
         .status(404)

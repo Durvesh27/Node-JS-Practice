@@ -82,7 +82,7 @@ app.post("/register", Register);
 app.post("/login", Login);
 app.post("/getCurrentUser", getCurrentUser);
 app.post("/addProduct", checkSeller, addProduct);
-app.get("/all-products",checkJWT, allProducts);
+app.get("/all-products",checkJWT,allProducts);
 app.post("/get-your-product", checkSeller, getYourProduct);
 app.patch("/update-product", checkSeller, updateYourProduct);
 app.delete("/delete-product", checkSeller, deleteYourProduct);
