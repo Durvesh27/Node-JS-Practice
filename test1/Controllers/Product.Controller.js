@@ -73,6 +73,20 @@ export const getYourProduct = async (req, res) => {
   }
 };
 
+export const SingleProduct=async (res,req)=>{
+try{
+const {userId}=req.body.userId;
+const findPro=await ProductModal.findById({userId:userId})
+if(findPro){
+return res.json({success:true, productData:findPro });
+}
+return res.status(404).json({ success:false, message: "No Product Found" });
+}
+catch (error) {
+  return res.status(500).json({ success:false, message: error });
+}
+};
+
 export const updateYourProduct = async (req, res) => {
   try {
     const { productId, name, price, category, image, token } = req.body;

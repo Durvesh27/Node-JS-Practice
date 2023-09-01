@@ -24,7 +24,7 @@ export const Register = async (req, res) => {
       return res.json({ success: true, message: "User registered Successfully." })
       
   } catch (error) {
-      return res.json({ success: false, message: "hiii" })
+      return res.json({ success: false, message:error})
   }
 }
 
@@ -43,15 +43,18 @@ export const Login = async (req, res) => {
       });
 
     const isPasswordRight = await bcrypt.compare(password, user.password);
+   
     if (isPasswordRight) {
+    
       const userObject = {
         name: user.name,
         email: user.email,
         role: user.role,
         _id: user._id,
       };
-      const expiryTime=user?.role =="Buyer"? 10:10;
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET,{expiresIn:expiryTime});
+      // const expiryTime=user?.role =="Buyer"? 10:10;
+      // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET,{expiresIn:expiryTime});
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
       // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
       return res.json({
         success: true,
@@ -60,9 +63,9 @@ export const Login = async (req, res) => {
         token: token,
       });
     }
-    return res.json({ success: false, message: "Password is wrong" });
-  } catch (err) {
-    res.json({ success: false, message: err });
+    return res.status(404).json({ success: false, message: "Password is wrong" });
+  } catch (error) {
+    return res.json({ success: false, message: error });
   }
 };
 

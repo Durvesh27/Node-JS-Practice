@@ -12,6 +12,7 @@ import {
   verifyOtp,
 } from "./Controllers/User.controller.js";
 import {
+  SingleProduct,
   addComments,
   addProduct,
   addRating,
@@ -82,7 +83,8 @@ app.post("/register", Register);
 app.post("/login", Login);
 app.post("/getCurrentUser", getCurrentUser);
 app.post("/addProduct", checkSeller, addProduct);
-app.get("/all-products",checkJWT,allProducts);
+app.get("/all-products",allProducts);
+app.post("/single-product",SingleProduct);
 app.post("/get-your-product", checkSeller, getYourProduct);
 app.patch("/update-product", checkSeller, updateYourProduct);
 app.delete("/delete-product", checkSeller, deleteYourProduct);

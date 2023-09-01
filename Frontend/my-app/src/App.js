@@ -6,6 +6,7 @@ import Navbar from './Components/Common/Navbar'
 import AddProduct from "./Components/Seller/AddProduct";
 import YourProducts from "./Components/Seller/YourProducts";
 import Profile from "./Components/Profile";
+import SingleProduct from "./Components/Seller/SingleProduct";
 function App() {
   return (
     <div className="App">
@@ -17,6 +18,7 @@ function App() {
       <Route exact path='/add-product' element={<AddProduct/>}/>
       <Route exact path='/your-products' element={<YourProducts/>}/>
       <Route exact path='/profile' element={<Profile/>}/>
+      <Route exact path='/single-product/:userId' element={<SingleProduct/>}/>
      </Routes>
     </div>
   );
