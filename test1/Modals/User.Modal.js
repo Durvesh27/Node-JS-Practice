@@ -17,7 +17,6 @@ default:false
 otpForNumberVerification:{
 type:Number,
 default:null
-// required:true
 },
 email:{
     type:String,

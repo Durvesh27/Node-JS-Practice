@@ -7,6 +7,7 @@ import AddProduct from "./Components/Seller/AddProduct";
 import YourProducts from "./Components/Seller/YourProducts";
 import Profile from "./Components/Profile";
 import SingleProduct from "./Components/Seller/SingleProduct";
+import Cart from "./Components/Buyer/Cart";
 function App() {
   return (
     <div className="App">
@@ -19,6 +20,7 @@ function App() {
       <Route exact path='/your-products' element={<YourProducts/>}/>
       <Route exact path='/profile' element={<Profile/>}/>
       <Route exact path='/single-product/:userId' element={<SingleProduct/>}/>
+      <Route exact path='/cart' element={<Cart/>}/>
      </Routes>
     </div>
   );

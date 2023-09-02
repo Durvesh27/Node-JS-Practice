@@ -1,32 +1,55 @@
-
-import React, { useState } from 'react'
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import api from '../Api Config'
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import api from "../Api Config";
+import { toast } from "react-hot-toast";
 
 const SingleProduct = () => {
-const [singleProduct,setSingleProduct]=useState({})
-const {userId}=useParams()
-
-useEffect(()=>{
-async function checkFunction(){
-    const token = JSON.parse(localStorage.getItem("Token"));
-    if(token){
-    const response =await api.post("http://localhost:8000/single-product",{userId})  
-    if(response.data.success){
-    singleProduct(response.data.productData)
+  const [singleProduct, setSingleProduct] = useState({});
+  const { userId } = useParams();
+  const router=useNavigate()
+  useEffect(() => {
+    async function checkFunction() {
+      try {
+          const response = await api.post(
+            "http://localhost:8000/single-product",
+            { productId:userId }
+          );
+          if (response.data.success) {
+            setSingleProduct(response.data.productData);
+          }
+      } catch (error) {
+        console.log(error);
+      }
     }
-}
-}
-checkFunction()
-},[])
+    checkFunction();
+  }, [userId]);
+  
+ async function addCart(productId){
 
+  try{
+  const token=JSON.parse(localStorage.getItem("Token"))
+  const response=await api.post("http://localhost:8000/add-cart",{productId,token})
+  if (response.data.success) {
+   console.log("success")
+    toast.success("Product Added to Cart")
+  }
+  }
+  catch(error){
+    console.log(error)
+  }
+ }
   return (
-    <div>
-      <img src={singleProduct?.image} alt="" />
-      <h3>{singleProduct?.category}</h3>
+    <div style={{display:"flex",justifyContent:"space-around",marginTop:"100px"}}>
+      <img src={singleProduct?.image} alt="" style={{width:"300px",height:"350px"}} />
+      <div style={{marginTop:"100px"}}>
+      <h2>{singleProduct?.name}</h2>
+      <h3>Category: {singleProduct?.category}</h3>
+      <h3>Price: {singleProduct?.price}</h3>
+      <button onClick={()=>addCart(singleProduct?._id)}>Add to Cart</button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default SingleProduct
+export default SingleProduct;

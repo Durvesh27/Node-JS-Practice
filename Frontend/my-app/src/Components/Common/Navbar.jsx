@@ -28,7 +28,7 @@ const router=useNavigate();
       <div className="secondary flex">
         {state?.user?.name?
          <>
-         {state?.user?.role!="Seller" && <p>Cart</p>}
+         {state?.user?.role!="Seller" && <p onClick={()=>router("/cart")}>Cart</p>}
          <p onClick={()=>router("/profile")}>Profile</p>
          <p onClick={()=>Logout()}>Logout</p>
          </>

@@ -7,12 +7,10 @@ export const addCart = async (req, res) => {
     if (!token || !productId) throw new Error("Token & Product Id is required");
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decodedData?.userId;
-    const user = await UserModal.findById({ _id: userId });
-    user?.cart.push(productId);
-    await user.save();
+    const user = await UserModal.findByIdAndUpdate(userId,{$push:{cart:productId}});
     return res.status(200).json({ success: true, user: user });
   } catch (error) {
-    return res.status(500).json({ status: "error", message: error });
+    return res.status(500).json({ success:false, message: error });
   }
 };
 

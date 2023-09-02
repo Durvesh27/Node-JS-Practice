@@ -89,7 +89,7 @@ app.post("/get-your-product", checkSeller, getYourProduct);
 app.patch("/update-product", checkSeller, updateYourProduct);
 app.delete("/delete-product", checkSeller, deleteYourProduct);
 app.post("/add-cart", addCart);
-app.get("/get-cart-products", getCartProducts);
+app.post("/get-cart-products", getCartProducts);
 
 app.patch("/add-rating", isValidUser, addRating);
 app.patch("/add-comments", isValidUser, addComments);
