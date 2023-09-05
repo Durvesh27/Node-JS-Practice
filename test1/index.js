@@ -10,7 +10,7 @@ dotenv.config();
 app.use(cors());
 
 app.get("/", (req, res) => {
-  console.log("Code running");
+  res.send("Code running");
 });
 
 function checkJWT(req, res, next) {
