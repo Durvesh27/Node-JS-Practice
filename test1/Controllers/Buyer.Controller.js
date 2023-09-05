@@ -99,3 +99,22 @@ export const deleteCartProduct = async (req, res) => {
     return res.status(500).json({ status: "error", message: error });
   }
 };
+
+export const updateCart=async (req,res)=>{
+  try{
+  const {token}=req.body;
+  const decodedData=jwt.verify(token,process.env.JWT_SECRET)
+  if(!decodedData){
+    return res.status(404).json({success:false,message:"Token not valid"})
+  }
+  const userId=decodedData?.userId;
+  const cartUser=await UserModal.findById(userId)
+  if(cartUser){
+  return res.status(200).json({success:true,userDetails:cartUser})
+  }
+  return res.status(404).json({success:false,message:"User not found"})
+  }
+  catch (error) {
+    return res.status(500).json({ success:false, message: error });
+  }
+}

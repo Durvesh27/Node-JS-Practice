@@ -35,14 +35,29 @@ useEffect(() => {
   }
 }, [cartProducts]);
 
-// function delItem(itemId) {
-//   let updatedItems = cartProducts.filter((ele) => {
-//     return ele.id !== itemId;
-//   });
-//   state.user.cart = updatedItems;
-//   toast("Item deleted")
-//   setCartproducts(updatedItems);
-// }
+
+ async  function delItem(itemId) {
+  try{
+    let updatedItems = cartProducts.filter((ele) => {
+      return ele._id !== itemId;
+    });
+    const token=JSON.parse(localStorage.getItem("Token"))
+    if(token){
+      const response=await api.post("http://localhost:8000/cart-user",{token})
+      if(response.data.success){
+        response.data.userDetails.cart = updatedItems;
+        response.data.userDetails.save()
+        toast("Item deleted")
+        setCartproducts(updatedItems);
+      }
+    } 
+  }
+  catch(error){
+    console.log(error,"error")
+  }  
+  }
+
+
 
   return (
     <div style={{width:"80%",margin:"auto",border:"1px solid black",marginTop:"50px",display:"flex",justifyContent:"space-between",padding:"20px"}}>
@@ -54,8 +69,8 @@ useEffect(() => {
            <div style={{marginLeft:"20px",marginTop:"10px"}}>
            <h3>{pro?.name}</h3>
           <h3>Rs.{pro?.price}</h3>
-          {/* <button style={{padding:"3px",backgroundColor:"black",color:"white"}} onClick={()=>{delItem(pro?._id)}}>Remove</button> */}
-          <button style={{padding:"3px",backgroundColor:"black",color:"white"}} >Remove</button>
+          <button style={{padding:"3px",backgroundColor:"black",color:"white"}} onClick={()=>{delItem(pro?._id)}}>Remove</button>
+          {/* <button style={{padding:"3px",backgroundColor:"black",color:"white"}} >Remove</button> */}
             </div> 
          </div>
         ))

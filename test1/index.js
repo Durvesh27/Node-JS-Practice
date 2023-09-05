@@ -32,6 +32,7 @@ import {
   deleteCartProduct,
   getCartProducts,
   getWishlistProducts,
+  updateCart,
 } from "./Controllers/Buyer.Controller.js";
 import {
   blockProduct,
@@ -90,6 +91,7 @@ app.patch("/update-product", checkSeller, updateYourProduct);
 app.delete("/delete-product", checkSeller, deleteYourProduct);
 app.post("/add-cart", addCart);
 app.post("/get-cart-products", getCartProducts);
+app.post("/cart-user",updateCart)
 
 app.patch("/add-rating", isValidUser, addRating);
 app.patch("/add-comments", isValidUser, addComments);
