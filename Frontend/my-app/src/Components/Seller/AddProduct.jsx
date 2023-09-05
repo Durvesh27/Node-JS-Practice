@@ -27,7 +27,7 @@ const AddProduct = () => {
       productData.category 
     ) {
         const token=JSON.parse(localStorage.getItem("Token"))
-        const response = await axios.post("http://localhost:8000/addProduct", {token, productData });
+        const response = await axios.post("/seller/addProduct", {token, productData });
         if (response.data.success) {
           setProductData({
             name: "",

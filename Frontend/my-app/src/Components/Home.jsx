@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../MyContext'
-import axios from 'axios'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import api from './Api Config'
@@ -11,7 +10,8 @@ const[myProducts,setMyProducts]=useState()
 const router=useNavigate()
 useEffect(()=>{
 async function getProducts() {
-const response =await api.get("http://localhost:8000/all-products")  
+
+const response =await api.get("/all/all-products")  
 if(response.data.success){
 setMyProducts(response.data.products)
 }

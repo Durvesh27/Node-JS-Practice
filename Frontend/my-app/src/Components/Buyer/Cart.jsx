@@ -13,7 +13,7 @@ useEffect(()=>{
         try{
         const token=JSON.parse(localStorage.getItem("Token"))
         if(token){
-          const response=await api.post("http://localhost:8000/get-cart-products",{token})   
+          const response=await api.post('/buyer/get-cart-products',{token})   
           if (response.data.success) {
           setCartproducts(response.data.products)
           }

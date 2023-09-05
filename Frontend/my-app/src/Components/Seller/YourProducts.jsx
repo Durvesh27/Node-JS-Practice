@@ -12,7 +12,7 @@ useEffect(()=>{
 async function getProducts() {
 const token = JSON.parse(localStorage.getItem("Token"));
 if(token){
-    const response =await axios.post("http://localhost:8000/get-your-product",{token})  
+    const response =await axios.post("/seller/get-your-product",{token})  
     if(response.data.success){
     setMyProducts(response.data.products)
     }

@@ -2,6 +2,7 @@
 import { createContext, useEffect, useReducer } from "react";
 import api from "./Components/Api Config";
 
+
 export const AuthContext = createContext();
 
 const initialValue = { user: null };
@@ -41,7 +42,7 @@ const AuthProvider = ({ children }) => {
       if(token){
         try{
           const response = await api.post(
-            "http://localhost:8000/getCurrentUser",
+            "/all/getCurrentUser",
             { token }
           );
           if (response.data.success) {

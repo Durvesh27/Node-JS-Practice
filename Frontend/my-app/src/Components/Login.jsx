@@ -17,7 +17,7 @@ const handleSubmit=async(e)=>{
 e.preventDefault();
 if (userData.email && userData.password) {
   try{
-    const response = await api.post("http://localhost:8000/login", { userData });
+    const response = await api.post("/all/login", { userData });
     if (response.data.success) {
         setUserData({ email: "", password: "" })
         router('/')

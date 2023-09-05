@@ -13,7 +13,7 @@ const Profile = () => {
   const [otpSent, setOtpSent] = useState(false);
 
   const sendOtp = async () => {
-    const response = await api.post("http://localhost:8000/send-otp", {
+    const response = await api.post("/all/send-otp", {
       userId: state?.user?._id,
       otp,
     });
@@ -29,7 +29,7 @@ const Profile = () => {
   const verifyOtp = async () => {
     console.log(state?.user?._id, "idd");
     console.log(otp, "otp");
-    const response = await api.post("http://localhost:8000/verify-otp", {
+    const response = await api.post("/all/verify-otp", {
       userId: state?.user?._id,
       otp: otp,
     });
@@ -44,7 +44,7 @@ const Profile = () => {
   useEffect(() => {
     async function getNumber() {
       try {
-        const response = await api.post("http://localhost:8000/get-number", {
+        const response = await api.post("/all/get-number", {
           userId: state?.user?._id,
         });
         if (response.data.success) {

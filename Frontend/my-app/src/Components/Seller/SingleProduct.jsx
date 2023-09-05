@@ -12,7 +12,7 @@ const SingleProduct = () => {
     async function checkFunction() {
       try {
           const response = await api.post(
-            "http://localhost:8000/single-product",
+            "/all/single-product",
             { productId:userId }
           );
           if (response.data.success) {
@@ -29,7 +29,7 @@ const SingleProduct = () => {
 
   try{
   const token=JSON.parse(localStorage.getItem("Token"))
-  const response=await api.post("http://localhost:8000/add-cart",{productId,token})
+  const response=await api.post("/buyer/add-cart",{productId,token})
   if (response.data.success) {
    console.log("success")
     toast.success("Product Added to Cart")

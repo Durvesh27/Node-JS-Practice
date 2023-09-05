@@ -33,7 +33,7 @@ const Register = () => {
       userData.confirmPassword
     ) {
       if (userData.password === userData.confirmPassword) {
-        const response = await api.post("http://localhost:8000/register", { userData });
+        const response = await api.post("/all/register", { userData });
         if (response.data.success) {
           setUserData({
             name: "",
