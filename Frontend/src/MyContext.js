@@ -1,6 +1,6 @@
 
 import { createContext, useEffect, useReducer } from "react";
-import api from "./Components/Api Config";
+import api from './Components/Api Config/index.js'
 
 
 export const AuthContext = createContext();
